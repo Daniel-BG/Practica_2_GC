@@ -68,19 +68,27 @@
   <ItemGroup>
     <ClCompile Include="Cara.cpp" />
     <ClCompile Include="Cono.cpp" />
+    <ClCompile Include="CurvaHipotrocoide.cpp" />
     <ClCompile Include="FalsoTetraedro.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Malla.cpp" />
+    <ClCompile Include="MallaExtrusion.cpp" />
     <ClCompile Include="PuntoVector3D.cpp" />
     <ClCompile Include="VerticeNormal.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cara.h" />
     <ClInclude Include="Cono.h" />
+    <ClInclude Include="CurvaHipotrocoide.h" />
     <ClInclude Include="FalsoTetraedro.h" />
     <ClInclude Include="Malla.h" />
+    <ClInclude Include="MallaExtrusion.h" />
     <ClInclude Include="PuntoVector3D.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="VerticeNormal.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="freeglut project 3D.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -36,6 +36,12 @@
     <ClCompile Include="Cono.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CurvaHipotrocoide.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MallaExtrusion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cono.h">
@@ -56,5 +62,19 @@
     <ClInclude Include="VerticeNormal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CurvaHipotrocoide.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MallaExtrusion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="freeglut project 3D.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

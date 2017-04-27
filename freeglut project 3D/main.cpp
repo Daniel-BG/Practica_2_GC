@@ -9,6 +9,8 @@
 
 #include <iostream>
 #include "Cono.h"
+#include "CurvaHipotrocoide.h"
+#include "MallaExtrusion.h"
 using namespace std;
 
 // Freeglut parameters
@@ -31,6 +33,8 @@ GLfloat angX, angY, angZ;
 //Tetraedro* tet;
 
 Cono * cono;
+CurvaHipotrocoide * c;
+MallaExtrusion * me;
 
 void buildSceneObjects() {	 
     angX=0.0f;
@@ -38,6 +42,9 @@ void buildSceneObjects() {
     angZ=0.0f;	
 	//tet=new Tetraedro();
 	cono = new Cono(200, 5, 10);
+	c = new CurvaHipotrocoide(7.0f, 4.0f, 2.0f);
+	me = new MallaExtrusion(200, 200, 3.0f, c);
+	
 }
 
 void initGL() {	 		 
@@ -104,7 +111,9 @@ void display(void) {
 			glVertex3f(0, 0, 20);	     
 		glEnd();
 		 		
-		cono->dibuja();
+		//cono->dibuja();
+
+		me->dibuja();
 
 		//glutSolidSphere(5, 50, 50);
 		// Cuadrado

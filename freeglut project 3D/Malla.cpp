@@ -51,5 +51,20 @@ void Malla::dibuja() {
 	}	 
 }
 
+PuntoVector3D * Malla::CalculoVectorNormalPorNewell(Cara * C) {
+	float nx = 0.0f, ny = 0.0f, nz = 0.0f;
+	for (int i = 0; i < C->getNumeroVertices(); i++) {
+		PuntoVector3D * vertActual = vertice[C->getIndiceVerticeK(i)];
+		PuntoVector3D * vertSiguiente = vertice[C->getIndiceVerticeK((i + 1) % C->getNumeroVertices())];
+		
+		nx += (vertActual->getY() - vertSiguiente->getY()) * (vertActual->getZ() + vertSiguiente->getZ());
+		ny += (vertActual->getZ() - vertSiguiente->getZ()) * (vertActual->getX() + vertSiguiente->getX());
+		nz += (vertActual->getX() - vertSiguiente->getX()) * (vertActual->getY() + vertSiguiente->getY());
+	}
+	PuntoVector3D * normal = new PuntoVector3D(nx, ny, nz, 0);
+	normal->normalizar();
+	return normal;
+}
+
  
 
