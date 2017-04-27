@@ -1,7 +1,7 @@
 #include "MallaExtrusion.h"
 
 
-MallaExtrusion::MallaExtrusion(int nP, int nQ, float r, CurvaHipotrocoide * c)
+MallaExtrusion::MallaExtrusion(int nP, int nQ, float r, float turns, CurvaHipotrocoide * c)
 {
 	PuntoVector3D ** perfil = new PuntoVector3D*[nP];
 	GLfloat matrix[16];
@@ -28,11 +28,12 @@ MallaExtrusion::MallaExtrusion(int nP, int nQ, float r, CurvaHipotrocoide * c)
 
 
 	//para cada traslación del polígono inicial
+	inc = (2 * PI * turns / nQ);
 	for (int i = 0; i < nQ; i++, t += inc) {
 		PuntoVector3D * vn = c->getN(t);
-		PuntoVector3D * vb = c->getN(t);
-		PuntoVector3D * vt = c->getN(t);
-		PuntoVector3D * pc = c->getN(t);
+		PuntoVector3D * vb = c->getB(t);
+		PuntoVector3D * vt = c->getT(t);
+		PuntoVector3D * pc = c->getC(t);
 		matrix[0] = vn->getX();
 		matrix[1] = vb->getX();
 		matrix[2] = vt->getX();

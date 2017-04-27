@@ -43,7 +43,7 @@ void buildSceneObjects() {
 	//tet=new Tetraedro();
 	cono = new Cono(200, 5, 10);
 	c = new CurvaHipotrocoide(7.0f, 4.0f, 2.0f);
-	me = new MallaExtrusion(200, 200, 3.0f, c);
+	me = new MallaExtrusion(20, 400, 0.5f, 4, c);
 	
 }
 
