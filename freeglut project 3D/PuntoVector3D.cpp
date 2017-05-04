@@ -65,6 +65,10 @@ GLfloat PuntoVector3D::productoEscalar(PuntoVector3D* vector) {
            z*vector->getZ();
 }
 
+GLfloat PuntoVector3D::getNorm() {
+	return sqrt(this->x*this->x + this->y*this->y + this->z*this->z);
+}
+
 PuntoVector3D* PuntoVector3D::productoVectorial(PuntoVector3D* v) {
     GLfloat resx=0;
     GLfloat resy=0;

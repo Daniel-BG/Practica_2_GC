@@ -15,6 +15,7 @@ class PuntoVector3D {
         GLfloat getX();
         GLfloat getY();
         GLfloat getZ();
+		GLfloat getNorm();
         bool esPunto();
         bool esVector();
         void escalar(GLfloat factor);

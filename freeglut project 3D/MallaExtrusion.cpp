@@ -3,6 +3,17 @@
 
 MallaExtrusion::MallaExtrusion(int nP, int nQ, float r, float turns, CurvaHipotrocoide * c)
 {
+	// NP --> numero vertices del perfil
+	// NQ --> numero de veces que se repite el perfil, para formar la figura
+	// r --> radio del perfil
+	/* turns:  
+		Como no es un circulo, que tebdría el intervalo 0--2PI, sino que es más largo,
+		da varias vueltas antes de cerrarse, el intervalo de esta malla sería:
+		0 - 2 * PI * turns. 
+		Para que complete la curva, lo ideal sería pasarle el periodo de la curva y
+		dividirlo entre 2PI (ejemplo: para un circulo, el periodo de l curva es 2PI, 
+		por lo que habria que pasarle 2PI/2PI, que es 1)
+	*/
 	PuntoVector3D ** perfil = new PuntoVector3D*[nP];
 	GLfloat matrix[16];
 
@@ -12,7 +23,7 @@ MallaExtrusion::MallaExtrusion(int nP, int nQ, float r, float turns, CurvaHipotr
 	matrix[15] = 1;
 
 	numeroVertices = nP*nQ;
-	numeroCaras = (nP)*(nQ - 1);
+	numeroCaras = (nP)*(nQ - 1); // el -1 es para que no se cierre al final
 	numeroNormales = numeroCaras;
 	//Creación de los arrays
 	vertice = new PuntoVector3D*[numeroVertices];
@@ -34,6 +45,7 @@ MallaExtrusion::MallaExtrusion(int nP, int nQ, float r, float turns, CurvaHipotr
 		PuntoVector3D * vb = c->getB(t);
 		PuntoVector3D * vt = c->getT(t);
 		PuntoVector3D * pc = c->getC(t);
+		//rellenada por filas
 		matrix[0] = vn->getX();
 		matrix[1] = vb->getX();
 		matrix[2] = vt->getX();

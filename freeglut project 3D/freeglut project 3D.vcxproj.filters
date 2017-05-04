@@ -42,6 +42,9 @@
     <ClCompile Include="MallaExtrusion.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Tanque.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cono.h">
@@ -69,6 +72,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MallaExtrusion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tanque.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

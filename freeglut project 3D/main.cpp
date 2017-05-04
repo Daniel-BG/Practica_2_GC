@@ -11,6 +11,7 @@
 #include "Cono.h"
 #include "CurvaHipotrocoide.h"
 #include "MallaExtrusion.h"
+#include "Tanque.h"
 using namespace std;
 
 // Freeglut parameters
@@ -35,6 +36,8 @@ GLfloat angX, angY, angZ;
 Cono * cono;
 CurvaHipotrocoide * c;
 MallaExtrusion * me;
+Tanque * tanque;
+float tt = PI;
 
 void buildSceneObjects() {	 
     angX=0.0f;
@@ -44,7 +47,7 @@ void buildSceneObjects() {
 	cono = new Cono(200, 5, 10);
 	c = new CurvaHipotrocoide(7.0f, 4.0f, 2.0f);
 	me = new MallaExtrusion(20, 400, 0.5f, 4, c);
-	
+	tanque = new Tanque(1,0.5,0.5);
 }
 
 void initGL() {	 		 
@@ -112,8 +115,55 @@ void display(void) {
 		glEnd();
 		 		
 		//cono->dibuja();
-
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		me->dibuja();
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+		//crear matriz 4x4
+		float matrix[16];
+
+		
+		PuntoVector3D *n, *b, *t, *p, *c2;
+		n = c->getN(tt);
+		b = c->getB(tt);
+		t = c->getT(tt);
+		p = c->getC(tt);
+		c2 = c->getC2(tt);
+		float derrape = c2->getNorm();
+		
+
+		//rellenada por columnas
+		matrix[0] = n->getX();
+		matrix[1] = n->getY();
+		matrix[2] = n->getZ();
+		matrix[3] = 0;
+		matrix[4] = b->getX();
+		matrix[5] = b->getY();
+		matrix[6] = b->getZ();
+		matrix[7] = 0;
+		matrix[8] = t->getX();
+		matrix[9] = t->getY();
+		matrix[10] = t->getZ();
+		matrix[11] = 0;
+		matrix[12] = p->getX();
+		matrix[13] = p->getY();
+		matrix[14] = p->getZ();
+		matrix[15] = 1;
+		
+
+		//aplicarla a openglç
+		glMatrixMode(GL_MODELVIEW);
+		glPushMatrix();
+		glMultMatrixf(matrix);
+		glRotatef(180, 1, 0, 0);
+		glRotatef(derrape*5, 0, 1, 0);
+		//cout << derrape * 5 << endl;
+
+
+		tanque->dibuja();
+
+		//hacer pop matriz
+		glPopMatrix();
 
 		//glutSolidSphere(5, 50, 50);
 		// Cuadrado
@@ -203,6 +253,10 @@ void key(unsigned char key, int x, int y){
 		case 'x': angY=angY-5; break;
 		case 'd': angZ=angZ+5; break;
 		case 'c': angZ=angZ-5; break;  
+		case 'r': tt += 0.1; break;
+		case 'R': tt -= 0.1; break;
+		case 'o': tanque->aumentaAngulo(1); break;
+		case 'O': tanque->aumentaAngulo(-1); break;
 		default:
 			need_redisplay = false;
 			break;

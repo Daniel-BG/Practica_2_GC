@@ -74,6 +74,7 @@
     <ClCompile Include="Malla.cpp" />
     <ClCompile Include="MallaExtrusion.cpp" />
     <ClCompile Include="PuntoVector3D.cpp" />
+    <ClCompile Include="Tanque.cpp" />
     <ClCompile Include="VerticeNormal.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -85,6 +86,7 @@
     <ClInclude Include="MallaExtrusion.h" />
     <ClInclude Include="PuntoVector3D.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Tanque.h" />
     <ClInclude Include="VerticeNormal.h" />
   </ItemGroup>
   <ItemGroup>
