@@ -12,6 +12,7 @@
 #include "CurvaHipotrocoide.h"
 #include "MallaExtrusion.h"
 #include "Tanque.h"
+#include "Camara.h"
 using namespace std;
 
 // Freeglut parameters
@@ -33,6 +34,7 @@ GLdouble upX=0, upY=1, upZ=0;
 GLfloat angX, angY, angZ; 
 //Tetraedro* tet;
 
+Camara * camara;
 Cono * cono;
 CurvaHipotrocoide * c;
 MallaExtrusion * me;
@@ -48,6 +50,10 @@ void buildSceneObjects() {
 	c = new CurvaHipotrocoide(7.0f, 4.0f, 2.0f);
 	me = new MallaExtrusion(20, 400, 0.5f, 4, c);
 	tanque = new Tanque(1,0.5,0.5);
+	camara = new Camara();
+	camara->setEye(new PuntoVector3D(eyeX, eyeY, eyeZ, 1));
+	camara->setLook(new PuntoVector3D(lookX, lookY, lookZ, 0));
+	camara->setUp(new PuntoVector3D(upX, upY, upZ, 0));
 }
 
 void initGL() {	 		 
@@ -76,7 +82,8 @@ void initGL() {
 	// Camera set up
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	gluLookAt(eyeX, eyeY, eyeZ, lookX, lookY, lookZ, upX, upY, upZ);
+	camara->setInverse();
+	//gluLookAt(eyeX, eyeY, eyeZ, lookX, lookY, lookZ, upX, upY, upZ);
 
 	// Frustum set up
     glMatrixMode(GL_PROJECTION);
@@ -154,13 +161,13 @@ void display(void) {
 		//aplicarla a openglç
 		glMatrixMode(GL_MODELVIEW);
 		glPushMatrix();
-		glMultMatrixf(matrix);
-		glRotatef(180, 1, 0, 0);
-		glRotatef(derrape*5, 0, 1, 0);
-		//cout << derrape * 5 << endl;
+			glMultMatrixf(matrix);
+			glRotatef(180, 1, 0, 0);
+			glRotatef(derrape*5, 0, 1, 0);
+			//cout << derrape * 5 << endl;
 
 
-		tanque->dibuja();
+			tanque->dibuja();
 
 		//hacer pop matriz
 		glPopMatrix();
@@ -253,8 +260,14 @@ void key(unsigned char key, int x, int y){
 		case 'x': angY=angY-5; break;
 		case 'd': angZ=angZ+5; break;
 		case 'c': angZ=angZ-5; break;  
-		case 'r': tt += 0.1; break;
-		case 'R': tt -= 0.1; break;
+		case 'r': 
+			tt += 0.1; 
+			tanque->giraRueda(-10);
+			break;
+		case 'R': 
+			tt -= 0.1; 
+			tanque->giraRueda(10);
+			break;
 		case 'o': tanque->aumentaAngulo(1); break;
 		case 'O': tanque->aumentaAngulo(-1); break;
 		default:

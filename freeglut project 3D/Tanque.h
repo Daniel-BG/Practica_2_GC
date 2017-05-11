@@ -1,7 +1,7 @@
 #pragma once
 
 #include <GL/freeglut.h>
-
+#include "Rueda.h"
 
 class Tanque
 {
@@ -10,9 +10,10 @@ public:
 	~Tanque();
 	void dibuja();
 	void aumentaAngulo(GLdouble valor);
+	void giraRueda (GLdouble valor);
 
 private:
-	GLdouble longitud, ancho, alto, angulo;
-
+	GLdouble longitud, ancho, alto, angulo, anguloRueda;
+	Rueda rueda;
 };
 

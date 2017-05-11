@@ -66,6 +66,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camara.cpp" />
     <ClCompile Include="Cara.cpp" />
     <ClCompile Include="Cono.cpp" />
     <ClCompile Include="CurvaHipotrocoide.cpp" />
@@ -74,10 +75,12 @@
     <ClCompile Include="Malla.cpp" />
     <ClCompile Include="MallaExtrusion.cpp" />
     <ClCompile Include="PuntoVector3D.cpp" />
+    <ClCompile Include="Rueda.cpp" />
     <ClCompile Include="Tanque.cpp" />
     <ClCompile Include="VerticeNormal.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camara.h" />
     <ClInclude Include="Cara.h" />
     <ClInclude Include="Cono.h" />
     <ClInclude Include="CurvaHipotrocoide.h" />
@@ -86,6 +89,7 @@
     <ClInclude Include="MallaExtrusion.h" />
     <ClInclude Include="PuntoVector3D.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Rueda.h" />
     <ClInclude Include="Tanque.h" />
     <ClInclude Include="VerticeNormal.h" />
   </ItemGroup>

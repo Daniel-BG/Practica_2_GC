@@ -49,4 +49,14 @@ PuntoVector3D * CurvaHipotrocoide::getT(float t) {
 	return res;
 }
 
+GLdouble CurvaHipotrocoide::getArc(float t) {
+	float A = (a - b);
+	float B = A / b;
+	float s1 = sin((B - 1) * t) / 2.0 / (B - 1);
+	float s2 = sin(B * t) / B;
+	float s3 = sin((B + 1) * t) / 2.0 / (B + 1);
+	float s4 = sin(t);
+	return A*A + c*c*B*B + A*B*c*(s1 - s2 - s3 - s4);
+}
+
 

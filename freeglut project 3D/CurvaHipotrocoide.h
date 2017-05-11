@@ -15,6 +15,8 @@ public:
 	PuntoVector3D * getC1(float t);
 	PuntoVector3D * getC2(float t);
 
+	GLdouble getArc(float t);
+
 private:
 	float a, b, c;
 

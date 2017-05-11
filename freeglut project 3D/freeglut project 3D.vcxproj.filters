@@ -45,6 +45,12 @@
     <ClCompile Include="Tanque.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Rueda.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Camara.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cono.h">
@@ -75,6 +81,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Tanque.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Rueda.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Camara.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
