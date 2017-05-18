@@ -26,7 +26,7 @@ int WIDTH= 500, HEIGHT= 500;
 GLdouble xRight=10, xLeft=-xRight, yTop=10, yBot=-yTop, N=1, F=1000;
 
 // Camera parameters
-GLdouble eyeX=100.0, eyeY=100.0, eyeZ=100.0;
+GLdouble eyeX=5.0, eyeY=5.0, eyeZ=5.0;
 GLdouble lookX=0.0, lookY=0.0, lookZ=0.0;
 GLdouble upX=0, upY=1, upZ=0;
 
@@ -35,6 +35,8 @@ GLfloat angX, angY, angZ;
 //Tetraedro* tet;
 
 Camara * camara;
+Camara * camaraInside;
+bool isInside = false;
 Cono * cono;
 CurvaHipotrocoide * c;
 MallaExtrusion * me;
@@ -54,6 +56,9 @@ void buildSceneObjects() {
 	camara->setEye(new PuntoVector3D(eyeX, eyeY, eyeZ, 1));
 	camara->setLook(new PuntoVector3D(lookX, lookY, lookZ, 0));
 	camara->setUp(new PuntoVector3D(upX, upY, upZ, 0));
+	camaraInside = new Camara();
+	camaraInside->setUp(new PuntoVector3D(upX, upY, upZ, 0));
+	camaraInside->inside(c, tanque, tt);
 }
 
 void initGL() {	 		 
@@ -64,6 +69,7 @@ void initGL() {
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_NORMALIZE);
 	glShadeModel(GL_SMOOTH); // Shading by default
+	glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
 
 	buildSceneObjects();
 
@@ -82,13 +88,19 @@ void initGL() {
 	// Camera set up
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	camara->setInverse();
+	if (isInside) {
+		camaraInside->setInverse();
+	}
+	else {
+		camara->setInverse();
+	}
 	//gluLookAt(eyeX, eyeY, eyeZ, lookX, lookY, lookZ, upX, upY, upZ);
 
 	// Frustum set up
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();     
-	glOrtho(xLeft, xRight, yBot, yTop, N, F);
+	//glOrtho(xLeft, xRight, yBot, yTop, N, F);
+	gluPerspective(60, 1, 0.1, 200);
 
 	// Viewport set up
     glViewport(0, 0, WIDTH, HEIGHT);  	
@@ -97,7 +109,23 @@ void initGL() {
 void display(void) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);  
 
+
+
 	glMatrixMode(GL_MODELVIEW);	 
+
+	glLoadIdentity();
+	if (isInside) {
+		camaraInside->inside(c, tanque, tt);
+		camaraInside->setInverse();
+	}
+	else {
+		camara->setInverse();
+	}
+
+	
+
+
+
 	glPushMatrix();
 	
 		// Rotating the scene
@@ -123,8 +151,23 @@ void display(void) {
 		 		
 		//cono->dibuja();
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glMatrixMode(GL_COLOR);
+		glPushMatrix();
+		glEnable(GL_COLOR_MATERIAL);
+		GLfloat v[4]; v[0] = 1; v[1] = 0; v[2] = 0; v[3] = 1;
+		GLfloat w[4]; w[0] = 0; w[1] = 1; w[2] = 0; w[3] = 1;
+		glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+		glColor4f(v[0], v[1], v[2], v[3]);
+		glColorMaterial(GL_BACK, GL_AMBIENT_AND_DIFFUSE);
+		glColor4f(w[0], w[1], w[2], w[3]);
+		//glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, w);
+
 		me->dibuja();
+		glPopMatrix();
+		glMatrixMode(GL_MODELVIEW);
+		//glDisable(GL_COLOR_MATERIAL);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
 
 		//crear matriz 4x4
 		float matrix[16];
@@ -166,8 +209,8 @@ void display(void) {
 			glRotatef(derrape*5, 0, 1, 0);
 			//cout << derrape * 5 << endl;
 
-
-			tanque->dibuja();
+			if (!isInside)
+				tanque->dibuja();
 
 		//hacer pop matriz
 		glPopMatrix();
@@ -243,7 +286,8 @@ void resize(int newWidth, int newHeight) {
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();   
-	glOrtho(xLeft, xRight, yBot, yTop, N, F);
+	//glOrtho(xLeft, xRight, yBot, yTop, N, F);
+	gluPerspective(60, 1, 0.1, 200);
 }
 
 void key(unsigned char key, int x, int y){
@@ -254,6 +298,7 @@ void key(unsigned char key, int x, int y){
 			//Freeglut's sentence for stopping glut's main loop (*)
 			glutLeaveMainLoop (); 
 			break;		 
+		case 'i': isInside = !isInside; break;
 		case 'a': angX=angX+5; break;
 		case 'z': angX=angX-5; break; 
 		case 's': angY=angY+5; break;

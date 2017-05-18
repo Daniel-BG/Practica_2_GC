@@ -23,6 +23,16 @@ void Camara::setUp(PuntoVector3D * up) {
 	this->up = up;
 }
 
+void Camara::inside(CurvaHipotrocoide * curva, Tanque * tanque, float t) {
+	PuntoVector3D * eye = curva->getC(t);
+	//eye->sumar(tanque->getCannonOffset());
+	this->setEye(eye);
+	PuntoVector3D * look = curva->getC(t);
+	look->sumar(curva->getC1(t));
+	this->setLook(look);
+}
+
+
 void Camara::setDirect() {
 	//n = (eye-look).normaliza
 	//u = (look x n).norm

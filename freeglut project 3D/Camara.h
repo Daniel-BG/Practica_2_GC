@@ -1,5 +1,7 @@
 #pragma once
 #include "PuntoVector3D.h"
+#include "CurvaHipotrocoide.h"
+#include "Tanque.h"
 
 class Camara
 {
@@ -15,5 +17,6 @@ public:
 	void setUp(PuntoVector3D * up);
 	void setDirect();
 	void setInverse();
+	void inside(CurvaHipotrocoide * curva, Tanque * tanque, float t);
 };
 

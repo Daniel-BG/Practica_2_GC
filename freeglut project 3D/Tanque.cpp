@@ -16,6 +16,16 @@ Tanque::~Tanque()
 {
 }
 
+
+PuntoVector3D * Tanque::getCannonOffset() {
+	float offset = longitud / 4 + longitud * 1.2;
+	return new PuntoVector3D(offset * cos(angulo), longitud * 3 / 4, offset * sin(angulo), 1);
+}
+
+PuntoVector3D * Tanque::getCannonVector() {
+	return new PuntoVector3D(cos(angulo), 0, sin(angulo), 0);
+}
+
 void Tanque::dibuja() {
 	//glTranslate(longitud/2, );
 	GLdouble sizeAbajo = longitud;

@@ -40,7 +40,7 @@ int Malla::getNumeroCaras() {
 
 void Malla::dibuja() {	 	 
 	for (int i=0; i<numeroCaras; i++) {		
-		glBegin(GL_POLYGON);			 
+		glBegin(GL_POLYGON);	
 		for (int j=0; j<cara[i]->getNumeroVertices(); j++) {
 			int iN=cara[i]->getIndiceNormalK(j);
 			int iV=cara[i]->getIndiceVerticeK(j);

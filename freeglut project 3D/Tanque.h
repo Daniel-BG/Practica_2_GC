@@ -2,6 +2,7 @@
 
 #include <GL/freeglut.h>
 #include "Rueda.h"
+#include "PuntoVector3D.h"
 
 class Tanque
 {
@@ -11,6 +12,8 @@ public:
 	void dibuja();
 	void aumentaAngulo(GLdouble valor);
 	void giraRueda (GLdouble valor);
+	PuntoVector3D * getCannonOffset();
+	PuntoVector3D * getCannonVector();
 
 private:
 	GLdouble longitud, ancho, alto, angulo, anguloRueda;
