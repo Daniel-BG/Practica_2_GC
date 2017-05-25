@@ -80,3 +80,23 @@ PuntoVector3D* PuntoVector3D::productoVectorial(PuntoVector3D* v) {
 }
 
 
+//función para rotar respecto a un vector
+//asumiendo v=u,v,w normalizado, el resultado es:
+//	x: u(ux+vy+wz)(1-cos(angle)) + xcos(angle) + (-wy+vz)sin(angle)
+//	y: v(ux+vy+wz)(1-cos(angle)) + ycos(angle) + (wx-uz)sin(angle)
+//	z: w(ux+vy+wz)(1-cos(angle)) + zcos(angle) + (-vx+uy)sin(angle)
+//llamando A al vector original y B al eje:
+//	R = B*(A dot B)*(1-cos(angle)) + A*cos(angle) + (A cross B)*sin(angle)
+PuntoVector3D* PuntoVector3D::rotateAgainstNormal(PuntoVector3D* v, GLdouble angle) {
+	GLfloat dot = this->productoEscalar(v);
+	PuntoVector3D* r1 = v->clonar(); 
+	r1->escalar(dot*(1 - cos(angle * PI / 180.0)));
+	PuntoVector3D* r2 = this->clonar();
+	r2->escalar(cos(angle * PI / 180.0));
+	PuntoVector3D* r3 = this->productoVectorial(v);
+	r3->escalar(sin(angle * PI / 180.0));
+	//return r2 since it has the same PV characteristic as (*this)
+	r2->sumar(r1);
+	r2->sumar(r3);
+	return r2;
+}

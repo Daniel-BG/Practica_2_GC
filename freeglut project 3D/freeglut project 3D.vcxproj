@@ -83,6 +83,7 @@
     <ClInclude Include="Camara.h" />
     <ClInclude Include="Cara.h" />
     <ClInclude Include="Cono.h" />
+    <ClInclude Include="Constants.h" />
     <ClInclude Include="CurvaHipotrocoide.h" />
     <ClInclude Include="FalsoTetraedro.h" />
     <ClInclude Include="Malla.h" />

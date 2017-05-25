@@ -316,6 +316,11 @@ void key(unsigned char key, int x, int y){
 		case 'o': tanque->aumentaAngulo(1); break;
 		case 'O': tanque->aumentaAngulo(-1); break;
 		case 'h': camara->rotationX(3.0f); break;
+		case 'H': camara->rotationX(-3.0f); break;
+		case 'j': camara->rotationY(3.0f); break;
+		case 'J': camara->rotationY(-3.0f); break;
+		case 'k': camara->rotationZ(3.0f); break;
+		case 'K': camara->rotationZ(-3.0f); break;
 		default:
 			need_redisplay = false;
 			break;

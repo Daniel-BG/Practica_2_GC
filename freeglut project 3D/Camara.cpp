@@ -1,10 +1,8 @@
 #include "Camara.h"
 
 
-Camara::Camara():
-angle(0)
+Camara::Camara()
 {
-	this->eye = NULL;
 }
 
 
@@ -14,9 +12,6 @@ Camara::~Camara()
 
 
 void Camara::setEye(PuntoVector3D * eye) {
-	if (this->eye == NULL) {
-		this->initialEye = eye;
-	}
 	this->eye = eye;
 }
 
@@ -105,11 +100,17 @@ void Camara::setInverse() {
 	glMultMatrixf(matrix);
 }
 
-void Camara::rotationX(GLfloat radio) {
-	this->angle += 2.0f * PI / 100.0f;
-	if (this->angle > 2.0f * PI) {
-		this->angle -= 2.0f * PI;
-	}
-	this->setEye(new PuntoVector3D(this->eye->getX(), this->initialEye->getY() + radio * cos(angle), this->initialEye->getZ() + radio * sin(angle), 1));
+void Camara::rotationX(GLfloat angle) {
+	this->eye = this->eye->rotateAgainstNormal(new PuntoVector3D(1, 0, 0, 0), angle);
+	this->setInverse();
+}
+
+void Camara::rotationY(GLfloat angle) {
+	this->eye = this->eye->rotateAgainstNormal(new PuntoVector3D(0, 1, 0, 0), angle);
+	this->setInverse();
+}
+
+void Camara::rotationZ(GLfloat angle) {
+	this->eye = this->eye->rotateAgainstNormal(new PuntoVector3D(0, 0, 1, 0), angle);
 	this->setInverse();
 }

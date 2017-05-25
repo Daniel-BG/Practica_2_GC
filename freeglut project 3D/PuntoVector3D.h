@@ -4,6 +4,7 @@
 
 #include <math.h>
 #include <GL/freeglut.h>
+#include "Constants.h"
 
 class PuntoVector3D {
 	private:
@@ -25,6 +26,8 @@ class PuntoVector3D {
         PuntoVector3D* clonar();
         GLfloat productoEscalar(PuntoVector3D* vector);
         PuntoVector3D* productoVectorial(PuntoVector3D* vector);
+
+		PuntoVector3D* rotateAgainstNormal(PuntoVector3D* v, GLdouble angle);
 };
 #endif
 
