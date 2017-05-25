@@ -42,6 +42,7 @@ bool isInside = false;
 Cono * cono;
 CurvaHipotrocoide * c;
 MallaExtrusion * me;
+bool wireFrame = false;
 Tanque * tanque;
 float tankPos = 0.0f;
 float tt = PI;
@@ -176,7 +177,7 @@ void display(void) {
 		glEnd();
 		 		
 		//cono->dibuja();
-		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		
 		/*glMatrixMode(GL_COLOR);
 		glPushMatrix();
 		glEnable(GL_COLOR_MATERIAL);
@@ -187,12 +188,15 @@ void display(void) {
 		glColorMaterial(GL_BACK, GL_AMBIENT_AND_DIFFUSE);
 		glColor4f(w[0], w[1], w[2], w[3]);*/
 		//glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, w);
-
+		if (wireFrame)
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		me->dibuja();
+		if (wireFrame)
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		//glPopMatrix();
 		glMatrixMode(GL_MODELVIEW);
 		//glDisable(GL_COLOR_MATERIAL);
-		//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		
 
 
 		//crear matriz 4x4
@@ -227,20 +231,22 @@ void display(void) {
 		matrix[15] = 1;
 		
 
-		//aplicarla a openglç
-		glMatrixMode(GL_MODELVIEW);
-		glPushMatrix();
+		if (!isInside) {
+			//aplicarla a openglç
+			glMatrixMode(GL_MODELVIEW);
+			glPushMatrix();
 			glMultMatrixf(matrix);
 			glTranslatef(0, 0, tankPos);
 			glRotatef(180, 1, 0, 0);
-			glRotatef(derrape*5, 0, 1, 0);
+			//glRotatef(derrape * 5, 0, 1, 0);
 			//cout << derrape * 5 << endl;
+			glRotatef(90, 0, 1, 0);
 
-			if (!isInside)
-				tanque->dibuja();
+			tanque->dibuja();
 
-		//hacer pop matriz
-		glPopMatrix();
+			//hacer pop matriz
+			glPopMatrix();
+		}
 
 		//glutSolidSphere(5, 50, 50);
 		// Cuadrado
@@ -372,10 +378,12 @@ void key(unsigned char key, int x, int y){
 			tankPos -= 0.2;
 			break;
 		case 'g':
-			// TODO: turn on tank lights
+			glEnable(GL_LIGHT1);
+			glEnable(GL_LIGHT2);
 			break;
 		case 'b':
-			// TODO: turn off tank lights
+			glDisable(GL_LIGHT1);
+			glDisable(GL_LIGHT2);
 			break;
 		case 'r':
 			camara->roll(3.0f);
@@ -395,8 +403,9 @@ void key(unsigned char key, int x, int y){
 		case 'Y':
 			camara->yaw(-3.0f);
 			break;
-
-
+		case 'l':
+			wireFrame = !wireFrame;
+			break;
 		default:
 			need_redisplay = false;
 			break;
