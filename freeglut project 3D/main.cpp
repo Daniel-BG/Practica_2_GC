@@ -81,16 +81,19 @@ void initGL() {
 	// Light0 Directional
 	glEnable(GL_LIGHTING);  
     glEnable(GL_LIGHT0);
-	GLfloat l0Black[] = { 0.3f, 0.3f, 0.3f, 1.0f };
+	GLfloat l0Black[] = { 0.3f, 1.0f, 0.3f, 1.0f };
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, l0Black);
-	GLfloat l0BlackAmbient[] = { 0.15f, 0.15f, 0.15f, 1.0f };
+	GLfloat l0BlackAmbient[] = { 0.15f, 0.5f, 0.15f, 1.0f };
 	glLightfv(GL_LIGHT0, GL_AMBIENT, l0BlackAmbient);
-	GLfloat l0BlackSpecular[] = { 0.3f, 0.3f, 0.3f, 1.0f };
+	GLfloat l0BlackSpecular[] = { 0.3f, 1.0f, 0.3f, 1.0f };
 	glLightfv(GL_LIGHT0, GL_SPECULAR, l0BlackSpecular);
+	// TODO: the position have to be where the angle with XZ plane is 45º
 	GLfloat l0Position[] = { 1.0f, 1.0f, 1.0f, 0.0f };
 	glLightfv(GL_LIGHT0, GL_POSITION, l0Position);
 	glDisable(GL_LIGHT0);
 	ldirectional = false;
+
+	// TODO: tank lights have to be "yellow"
 
     /*GLfloat d[]={0.7f,0.5f,0.5f,1.0f};
     glLightfv(GL_LIGHT0, GL_DIFFUSE, d);
@@ -321,33 +324,42 @@ void key(unsigned char key, int x, int y){
 		case 'x': angY=angY-5; break;
 		case 'd': angZ=angZ+5; break;
 		case 'c': angZ=angZ-5; break;  
-		case 'r': 
+		case 'q': 
 			tt += 0.1; 
 			tanque->giraRueda(-10);
 			break;
-		case 'R': 
+		case 'w': 
 			tt -= 0.1; 
 			tanque->giraRueda(10);
 			break;
 		case 'o': tanque->aumentaAngulo(1); break;
 		case 'O': tanque->aumentaAngulo(-1); break;
-		case 'h': camara->rotationX(3.0f); break;
-		case 'H': camara->rotationX(-3.0f); break;
-		case 'j': camara->rotationY(3.0f); break;
-		case 'J': camara->rotationY(-3.0f); break;
-		case 'k': camara->rotationZ(3.0f); break;
-		case 'K': camara->rotationZ(-3.0f); break;
-		case 'b': 
-			if (ldirectional) {
-				glDisable(GL_LIGHT0);
-				ldirectional = false;
-			}
-			else {
-				glEnable(GL_LIGHT0);
-				ldirectional = true;
-			}
+		case '1': camara->rotationX(3.0f); break;
+		case '2': camara->rotationX(-3.0f); break;
+		case '3': camara->rotationY(3.0f); break;
+		case '4': camara->rotationY(-3.0f); break;
+		case '5': camara->rotationZ(3.0f); break;
+		case '6': camara->rotationZ(-3.0f); break;
+		case 'h': 
+			glEnable(GL_LIGHT0);
+			ldirectional = true;
 			break;
-		case 'p':  break;
+		case 'n':
+			glDisable(GL_LIGHT0);
+			ldirectional = false;
+			break;
+		case 'f':  
+			// TODO: move tanq forward
+			break;
+		case 'v':
+			// TODO: move tanq -forward
+			break;
+		case 'g':
+			// TODO: turn on tank lights
+			break;
+		case 'b':
+			// TODO: turn off tank lights
+			break;
 		default:
 			need_redisplay = false;
 			break;
