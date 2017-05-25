@@ -99,8 +99,8 @@ void initGL() {
 	// Frustum set up
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();     
-	//glOrtho(xLeft, xRight, yBot, yTop, N, F);
-	gluPerspective(60, 1, 0.1, 200);
+	glOrtho(xLeft, xRight, yBot, yTop, N, F);
+	//gluPerspective(60, 1, 0.1, 200);
 
 	// Viewport set up
     glViewport(0, 0, WIDTH, HEIGHT);  	
@@ -151,7 +151,7 @@ void display(void) {
 		 		
 		//cono->dibuja();
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		glMatrixMode(GL_COLOR);
+		/*glMatrixMode(GL_COLOR);
 		glPushMatrix();
 		glEnable(GL_COLOR_MATERIAL);
 		GLfloat v[4]; v[0] = 1; v[1] = 0; v[2] = 0; v[3] = 1;
@@ -159,11 +159,11 @@ void display(void) {
 		glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 		glColor4f(v[0], v[1], v[2], v[3]);
 		glColorMaterial(GL_BACK, GL_AMBIENT_AND_DIFFUSE);
-		glColor4f(w[0], w[1], w[2], w[3]);
+		glColor4f(w[0], w[1], w[2], w[3]);*/
 		//glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, w);
 
 		me->dibuja();
-		glPopMatrix();
+		//glPopMatrix();
 		glMatrixMode(GL_MODELVIEW);
 		//glDisable(GL_COLOR_MATERIAL);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -286,8 +286,8 @@ void resize(int newWidth, int newHeight) {
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();   
-	//glOrtho(xLeft, xRight, yBot, yTop, N, F);
-	gluPerspective(60, 1, 0.1, 200);
+	glOrtho(xLeft, xRight, yBot, yTop, N, F);
+	//gluPerspective(60, 1, 0.1, 200);
 }
 
 void key(unsigned char key, int x, int y){
@@ -315,6 +315,7 @@ void key(unsigned char key, int x, int y){
 			break;
 		case 'o': tanque->aumentaAngulo(1); break;
 		case 'O': tanque->aumentaAngulo(-1); break;
+		case 'h': camara->rotationX(3.0f); break;
 		default:
 			need_redisplay = false;
 			break;

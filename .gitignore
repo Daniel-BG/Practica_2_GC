@@ -33,6 +33,9 @@ $RECYCLE.BIN/
 *.sdf
 *.suo
 
+#data base files
+*.db
+
 #Debug files
 [Dd]ebug/
 
