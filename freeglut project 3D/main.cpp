@@ -15,6 +15,8 @@
 #include "Camara.h"
 using namespace std;
 
+//#define __ORTHO
+
 // Freeglut parameters
 // Flag telling us to keep processing events
 // bool continue_in_main_loop= true; //(**)
@@ -41,6 +43,7 @@ Cono * cono;
 CurvaHipotrocoide * c;
 MallaExtrusion * me;
 Tanque * tanque;
+float tankPos = 0.0f;
 float tt = PI;
 bool ldirectional;
 
@@ -88,7 +91,7 @@ void initGL() {
 	GLfloat l0BlackSpecular[] = { 0.3f, 1.0f, 0.3f, 1.0f };
 	glLightfv(GL_LIGHT0, GL_SPECULAR, l0BlackSpecular);
 	// TODO: the position have to be where the angle with XZ plane is 45º
-	GLfloat l0Position[] = { 1.0f, 1.0f, 1.0f, 0.0f };
+	GLfloat l0Position[] = { 0.0f, 1.0f, 1.0f, 0.0f };
 	glLightfv(GL_LIGHT0, GL_POSITION, l0Position);
 	glDisable(GL_LIGHT0);
 	ldirectional = false;
@@ -117,9 +120,13 @@ void initGL() {
 
 	// Frustum set up
     glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();     
+    glLoadIdentity();    
+
+#ifdef __ORTHO
 	glOrtho(xLeft, xRight, yBot, yTop, N, F);
-	//gluPerspective(60, 1, 0.1, 200);
+#else
+	gluPerspective(60, 1, 0.1, 200);
+#endif
 
 	// Viewport set up
     glViewport(0, 0, WIDTH, HEIGHT);  	
@@ -169,7 +176,7 @@ void display(void) {
 		glEnd();
 		 		
 		//cono->dibuja();
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		/*glMatrixMode(GL_COLOR);
 		glPushMatrix();
 		glEnable(GL_COLOR_MATERIAL);
@@ -185,7 +192,7 @@ void display(void) {
 		//glPopMatrix();
 		glMatrixMode(GL_MODELVIEW);
 		//glDisable(GL_COLOR_MATERIAL);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 
 		//crear matriz 4x4
@@ -224,6 +231,7 @@ void display(void) {
 		glMatrixMode(GL_MODELVIEW);
 		glPushMatrix();
 			glMultMatrixf(matrix);
+			glTranslatef(0, 0, tankPos);
 			glRotatef(180, 1, 0, 0);
 			glRotatef(derrape*5, 0, 1, 0);
 			//cout << derrape * 5 << endl;
@@ -305,8 +313,17 @@ void resize(int newWidth, int newHeight) {
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();   
-	glOrtho(xLeft, xRight, yBot, yTop, N, F);
-	//gluPerspective(60, 1, 0.1, 200);
+
+#ifdef __ORTHO
+	if (isInside) {
+		gluPerspective(60, 1, 0.1, 200);
+	}
+	else {
+		glOrtho(xLeft, xRight, yBot, yTop, N, F);
+	}
+#else
+	gluPerspective(60, 1, 0.1, 200);
+#endif
 }
 
 void key(unsigned char key, int x, int y){
@@ -349,10 +366,10 @@ void key(unsigned char key, int x, int y){
 			ldirectional = false;
 			break;
 		case 'f':  
-			// TODO: move tanq forward
+			tankPos += 0.2;
 			break;
 		case 'v':
-			// TODO: move tanq -forward
+			tankPos -= 0.2;
 			break;
 		case 'g':
 			// TODO: turn on tank lights
@@ -360,6 +377,26 @@ void key(unsigned char key, int x, int y){
 		case 'b':
 			// TODO: turn off tank lights
 			break;
+		case 'r':
+			camara->roll(3.0f);
+			break;
+		case 'R':
+			camara->roll(-3.0f);
+			break;
+		case 't':
+			camara->pitch(3.0f);
+			break;
+		case 'T':
+			camara->pitch(-3.0f);
+			break;
+		case 'y':
+			camara->yaw(3.0f);
+			break;
+		case 'Y':
+			camara->yaw(-3.0f);
+			break;
+
+
 		default:
 			need_redisplay = false;
 			break;

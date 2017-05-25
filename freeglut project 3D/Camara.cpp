@@ -70,11 +70,11 @@ void Camara::setInverse() {
 	//u = (look x n).norm
 	//v = n x u
 	//matrix = u v n e
-	PuntoVector3D * n = this->eye->resta(this->look);
+	n = this->eye->resta(this->look);
 	n->normalizar();
-	PuntoVector3D * u = this->up->productoVectorial(n);
+	u = this->up->productoVectorial(n);
 	u->normalizar();
-	PuntoVector3D * v = n->productoVectorial(u);
+	v = n->productoVectorial(u);
 	GLfloat matrix[16];
 	GLfloat eu = this->eye->productoEscalar(u);
 	GLfloat en = this->eye->productoEscalar(n);
@@ -127,3 +127,45 @@ void Camara::rotationX2() {
 	}
 	this->setEye(new PuntoVector3D(this->eye->getX(), this->initialEye->getY() * cos(-this->angle), this->initialEye->getZ() * sin(-this->angle), 1));
 }*/
+
+/*--roll:
+ *rotate up with respect to n
+ */
+void Camara::roll(GLfloat angle) {
+	this->up = this->up->rotateAgainstNormal(this->n, angle);
+	this->setInverse(); //recalculate v, u, n
+}
+
+/*--pitch:
+ *rotate up with respect to u
+ *rotate vec = (look - eye) with respect to u, new look is eye + rotated vec
+ */
+void Camara::pitch(GLfloat angle) {
+	this->up = this->up->rotateAgainstNormal(this->u, angle);
+	PuntoVector3D * vec = this->look->clonar();
+	vec = vec->resta(this->eye);
+	vec = vec->rotateAgainstNormal(this->u, angle);
+	vec->sumar(this->eye);
+	this->look = vec;
+
+	this->setInverse(); //recalculate v, u, n
+}
+
+
+/*--yaw :
+ *rotate up with respect to v(most likely unchanged)
+ *rotate vec = (look - eye) with respect to v, new look is eye + rotated vec
+ */
+void Camara::yaw(GLfloat angle) {
+	this->up = this->up->rotateAgainstNormal(this->v, angle);
+	PuntoVector3D * vec = this->look->clonar();
+	vec = vec->resta(this->eye);
+	vec = vec->rotateAgainstNormal(this->v, angle);
+	vec->sumar(this->eye);
+	this->look = vec;
+
+	this->setInverse(); //recalculate v, u, n
+}
+
+
+

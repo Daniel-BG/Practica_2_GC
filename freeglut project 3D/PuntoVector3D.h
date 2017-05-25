@@ -5,6 +5,7 @@
 #include <math.h>
 #include <GL/freeglut.h>
 #include "Constants.h"
+#include <iostream>
 
 class PuntoVector3D {
 	private:
@@ -28,6 +29,11 @@ class PuntoVector3D {
         PuntoVector3D* productoVectorial(PuntoVector3D* vector);
 
 		PuntoVector3D* rotateAgainstNormal(PuntoVector3D* v, GLdouble angle);
+
+		friend std::ostream& operator<< (std::ostream& stream, const PuntoVector3D& pvec) {
+			stream << "(" << pvec.x << "," << pvec.y << "," << pvec.z << ";" << pvec.pv << ")";
+			return stream;
+		}
 };
 #endif
 
