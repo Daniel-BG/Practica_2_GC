@@ -114,3 +114,16 @@ void Camara::rotationZ(GLfloat angle) {
 	this->eye = this->eye->rotateAgainstNormal(new PuntoVector3D(0, 0, 1, 0), angle);
 	this->setInverse();
 }
+
+/*
+El método este hace lo mismo que el rotationX, pero solo te permite rotar frente 
+a la posicion inicial, por lo que es peor y por eso esta quitado
+
+void Camara::rotationX2() {
+	this->angle += 2.0f * PI / 100.0f;
+	if (this->angle > 2.0f * PI) {
+		this->angle -= 2.0f * PI;
+		
+	}
+	this->setEye(new PuntoVector3D(this->eye->getX(), this->initialEye->getY() * cos(-this->angle), this->initialEye->getZ() * sin(-this->angle), 1));
+}*/

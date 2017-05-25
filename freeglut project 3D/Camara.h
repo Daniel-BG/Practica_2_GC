@@ -8,7 +8,8 @@
 class Camara
 {
 private:
-	PuntoVector3D * eye, * look, * up;
+	PuntoVector3D * eye, * look, * up, *initialEye;
+	GLfloat angle;
 
 public:
 	Camara();

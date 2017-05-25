@@ -42,6 +42,7 @@ CurvaHipotrocoide * c;
 MallaExtrusion * me;
 Tanque * tanque;
 float tt = PI;
+bool ldirectional;
 
 void buildSceneObjects() {	 
     angX=0.0f;
@@ -73,17 +74,32 @@ void initGL() {
 
 	buildSceneObjects();
 
-	// Light0
+	// Ambient Light
+	GLfloat ambient[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambient);
+
+	// Light0 Directional
 	glEnable(GL_LIGHTING);  
     glEnable(GL_LIGHT0);
-    GLfloat d[]={0.7f,0.5f,0.5f,1.0f};
+	GLfloat l0Black[] = { 0.3f, 0.3f, 0.3f, 1.0f };
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, l0Black);
+	GLfloat l0BlackAmbient[] = { 0.15f, 0.15f, 0.15f, 1.0f };
+	glLightfv(GL_LIGHT0, GL_AMBIENT, l0BlackAmbient);
+	GLfloat l0BlackSpecular[] = { 0.3f, 0.3f, 0.3f, 1.0f };
+	glLightfv(GL_LIGHT0, GL_SPECULAR, l0BlackSpecular);
+	GLfloat l0Position[] = { 1.0f, 1.0f, 1.0f, 0.0f };
+	glLightfv(GL_LIGHT0, GL_POSITION, l0Position);
+	glDisable(GL_LIGHT0);
+	ldirectional = false;
+
+    /*GLfloat d[]={0.7f,0.5f,0.5f,1.0f};
     glLightfv(GL_LIGHT0, GL_DIFFUSE, d);
     GLfloat a[]={0.3f,0.3f,0.3f,1.0f};
     glLightfv(GL_LIGHT0, GL_AMBIENT, a);
 	GLfloat s[]={1.0f,1.0f,1.0f,1.0f};
     glLightfv(GL_LIGHT0, GL_SPECULAR, s);
 	GLfloat p[]={25.0f, 25.0f, 25.0f, 1.0f};	 
-	glLightfv(GL_LIGHT0, GL_POSITION, p);
+	glLightfv(GL_LIGHT0, GL_POSITION, p);*/
 
 	// Camera set up
 	glMatrixMode(GL_MODELVIEW);
@@ -321,6 +337,17 @@ void key(unsigned char key, int x, int y){
 		case 'J': camara->rotationY(-3.0f); break;
 		case 'k': camara->rotationZ(3.0f); break;
 		case 'K': camara->rotationZ(-3.0f); break;
+		case 'b': 
+			if (ldirectional) {
+				glDisable(GL_LIGHT0);
+				ldirectional = false;
+			}
+			else {
+				glEnable(GL_LIGHT0);
+				ldirectional = true;
+			}
+			break;
+		case 'p':  break;
 		default:
 			need_redisplay = false;
 			break;
