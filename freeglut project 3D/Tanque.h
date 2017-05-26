@@ -14,9 +14,11 @@ public:
 	void giraRueda (GLdouble valor);
 	PuntoVector3D * getCannonOffset();
 	PuntoVector3D * getCannonVector();
+	void setLights(bool state);
 
 private:
 	GLdouble longitud, ancho, alto, angulo, anguloRueda;
+	bool lightsOn = false;
 	Rueda rueda;
 };
 

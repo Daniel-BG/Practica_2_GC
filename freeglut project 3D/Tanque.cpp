@@ -36,12 +36,18 @@ void Tanque::dibuja() {
 	GLdouble longitudRueda = longitud / 4;
 	//light configuration
 	GLfloat white[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	GLfloat red[] = { 1.0f, 0.0f, 0.0f, 1.0f };
 	glLightfv(GL_LIGHT1, GL_DIFFUSE, white);
 	glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 25.0);
 	glLightf(GL_LIGHT1, GL_SPOT_EXPONENT, 4.0);
 	glLightfv(GL_LIGHT2, GL_DIFFUSE, white);
 	glLightf(GL_LIGHT2, GL_SPOT_CUTOFF, 25.0);
 	glLightf(GL_LIGHT2, GL_SPOT_EXPONENT, 4.0);
+	glLightfv(GL_LIGHT3, GL_DIFFUSE, white);
+	glLightf(GL_LIGHT3, GL_SPOT_CUTOFF, 20.0);
+	glLightf(GL_LIGHT3, GL_SPOT_EXPONENT, 4.0);
+	GLfloat dir[] = { 0.0, 0.0, 1.0 };
+	GLfloat pos[] = { 0.0, 0.0, 0.0, 1.0f };
 
 	//start!
 	glMatrixMode(GL_MODELVIEW);
@@ -54,25 +60,34 @@ void Tanque::dibuja() {
 	glColor3f(0.1, 0.8, 0.1);
 	glTranslated(-sizeAbajo / 3, 0, 0);
 	//foco1
-	GLfloat dir[] = { 0.0, 0.0, 1.0 };
-	GLfloat pos[] = { 0.0, 0.0, -1.0, 1.0f };	
+
 	glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, dir);
 	glLightfv(GL_LIGHT1, GL_POSITION, pos);
-
+	if (glIsEnabled(GL_LIGHT1)) {
+		glDisable(GL_LIGHTING);
+	}
 	glutSolidCylinder(radioCilindro * 2, longitudCilindro / 6, 100, 2);
+	if (glIsEnabled(GL_LIGHT1)) {
+		glEnable(GL_LIGHTING);
+	}
 	glTranslated((sizeAbajo / 3) * 2, 0, 0);
 
 
 	//foco 2
 	glLightfv(GL_LIGHT2, GL_SPOT_DIRECTION, dir);
 	glLightfv(GL_LIGHT2, GL_POSITION, pos);
-
-
+	if (glIsEnabled(GL_LIGHT2)) {
+		glDisable(GL_LIGHTING);
+	}
 	glutSolidCylinder(radioCilindro * 2, longitudCilindro / 6, 100, 2);
+	if (glIsEnabled(GL_LIGHT2)) {
+		glEnable(GL_LIGHTING);
+	}
 	glTranslated(-sizeAbajo / 3, 0, 0);
 	glRotated(-90, 0, 1, 0);
 	glTranslated(-sizeAbajo / 2, 0, 0);
 	//cubo arriba
+	glPushMatrix();
 	glTranslated(0, sizeAbajo / 2 + sizeArriba / 2, 0);
 	glRotated(angulo, 0, 1, 0);
 	glColor3f(0.1, 0.6, 0.1);
@@ -81,11 +96,17 @@ void Tanque::dibuja() {
 	glTranslated(sizeArriba / 2, 0, 0);
 	glRotated(90, 0, 1, 0);
 	glColor3f(0.1, 0.4, 0.1);
-	glutSolidCylinder(radioCilindro, longitudCilindro, 100, 2);
-	glRotated(-90, 0, 1, 0);
-	glTranslated(-sizeArriba / 2, 0, 0);
-	glRotated(-angulo, 0, 1, 0);
-	glTranslated(0, -(sizeAbajo / 2 + sizeArriba / 2), 0);
+	glutSolidCylinder(radioCilindro, glIsEnabled(GL_LIGHT3) ? longitudCilindro * 7 / 8 : longitudCilindro, 100, 2);
+	glTranslated(0, 0, longitudCilindro * 7 / 8);
+	glLightfv(GL_LIGHT3, GL_SPOT_DIRECTION, dir);
+	glLightfv(GL_LIGHT3, GL_POSITION, pos);
+	if (glIsEnabled(GL_LIGHT3)) {
+		glDisable(GL_LIGHTING);
+		glColor3f(1.0, 0.2, 0.2);
+		glutSolidCylinder(radioCilindro, longitudCilindro / 8, 100, 2);
+		glEnable(GL_LIGHTING);
+	}
+	glPopMatrix();
 	//Ruedas
 	glTranslated(sizeAbajo / 2, -sizeAbajo / 2 + 2 * radioRueda / 3, sizeAbajo / 2);
 	rueda.dibuja(anguloRueda);
@@ -106,4 +127,8 @@ void Tanque::aumentaAngulo(GLdouble valor) {
 
 void Tanque::giraRueda(GLdouble valor) {
 	anguloRueda += valor;
+}
+
+void Tanque::setLights(bool state) {
+	lightsOn = state;
 }

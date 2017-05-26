@@ -46,7 +46,6 @@ bool wireFrame = false;
 Tanque * tanque;
 float tankPos = 0.0f;
 float tt = PI;
-bool ldirectional;
 
 void buildSceneObjects() {	 
     angX=0.0f;
@@ -95,7 +94,6 @@ void initGL() {
 	GLfloat l0Position[] = { 0.0f, 1.0f, 1.0f, 0.0f };
 	glLightfv(GL_LIGHT0, GL_POSITION, l0Position);
 	glDisable(GL_LIGHT0);
-	ldirectional = false;
 
 	// TODO: tank lights have to be "yellow"
 
@@ -365,11 +363,9 @@ void key(unsigned char key, int x, int y){
 		case '6': camara->rotationZ(-3.0f); break;
 		case 'h': 
 			glEnable(GL_LIGHT0);
-			ldirectional = true;
 			break;
 		case 'n':
 			glDisable(GL_LIGHT0);
-			ldirectional = false;
 			break;
 		case 'f':  
 			tankPos += 0.2;
@@ -380,10 +376,12 @@ void key(unsigned char key, int x, int y){
 		case 'g':
 			glEnable(GL_LIGHT1);
 			glEnable(GL_LIGHT2);
+			glEnable(GL_LIGHT3);
 			break;
 		case 'b':
 			glDisable(GL_LIGHT1);
 			glDisable(GL_LIGHT2);
+			glDisable(GL_LIGHT3);
 			break;
 		case 'r':
 			camara->roll(3.0f);
