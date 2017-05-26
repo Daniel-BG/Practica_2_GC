@@ -84,7 +84,7 @@ void initGL() {
 	// Light0 Directional
 	glEnable(GL_LIGHTING);  
     glEnable(GL_LIGHT0);
-	GLfloat l0Black[] = { 0.3f, 1.0f, 0.3f, 1.0f };
+	GLfloat l0Black[] = { 0.3f, 0.6f, 0.3f, 1.0f };
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, l0Black);
 	GLfloat l0BlackAmbient[] = { 0.15f, 0.5f, 0.15f, 1.0f };
 	glLightfv(GL_LIGHT0, GL_AMBIENT, l0BlackAmbient);
@@ -174,28 +174,6 @@ void display(void) {
 			glVertex3f(0, 0, 20);	     
 		glEnd();
 		 		
-		//cono->dibuja();
-		
-		/*glMatrixMode(GL_COLOR);
-		glPushMatrix();
-		glEnable(GL_COLOR_MATERIAL);
-		GLfloat v[4]; v[0] = 1; v[1] = 0; v[2] = 0; v[3] = 1;
-		GLfloat w[4]; w[0] = 0; w[1] = 1; w[2] = 0; w[3] = 1;
-		glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
-		glColor4f(v[0], v[1], v[2], v[3]);
-		glColorMaterial(GL_BACK, GL_AMBIENT_AND_DIFFUSE);
-		glColor4f(w[0], w[1], w[2], w[3]);*/
-		//glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, w);
-		if (wireFrame)
-			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		me->dibuja();
-		if (wireFrame)
-			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		//glPopMatrix();
-		glMatrixMode(GL_MODELVIEW);
-		//glDisable(GL_COLOR_MATERIAL);
-		
-
 
 		//crear matriz 4x4
 		float matrix[16];
@@ -227,7 +205,7 @@ void display(void) {
 		matrix[13] = p->getY();
 		matrix[14] = p->getZ();
 		matrix[15] = 1;
-		
+
 
 		if (!isInside) {
 			//aplicarla a openglç
@@ -245,6 +223,32 @@ void display(void) {
 			//hacer pop matriz
 			glPopMatrix();
 		}
+
+
+		//cono->dibuja();
+		
+		/*glMatrixMode(GL_COLOR);
+		glPushMatrix();
+		glEnable(GL_COLOR_MATERIAL);
+		GLfloat v[4]; v[0] = 1; v[1] = 0; v[2] = 0; v[3] = 1;
+		GLfloat w[4]; w[0] = 0; w[1] = 1; w[2] = 0; w[3] = 1;
+		glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+		glColor4f(v[0], v[1], v[2], v[3]);
+		glColorMaterial(GL_BACK, GL_AMBIENT_AND_DIFFUSE);
+		glColor4f(w[0], w[1], w[2], w[3]);*/
+		//glMaterialfv(GL_BACK, GL_AMBIENT_AND_DIFFUSE, w);
+		if (wireFrame)
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		me->dibuja();
+		if (wireFrame)
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		//glPopMatrix();
+		//glMatrixMode(GL_MODELVIEW);
+		//glDisable(GL_COLOR_MATERIAL);
+		
+
+
+		
 
 		//glutSolidSphere(5, 50, 50);
 		// Cuadrado
