@@ -10,17 +10,17 @@ Tanque::Tanque(GLdouble longitud, GLdouble ancho, GLdouble alto) :
 	rueda(Rueda(longitud / 3, 3))
 {
 	//light configuration
-	GLfloat white[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	GLfloat yellow[] = { 1.0f, 1.0f, 0.0f, 1.0f };
 	GLfloat red[] = { 1.0f, 0.0f, 0.0f, 1.0f };
-	glLightfv(GL_LIGHT1, GL_DIFFUSE, white);
-	glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 25.0);
-	glLightf(GL_LIGHT1, GL_SPOT_EXPONENT, 4.0);
-	glLightfv(GL_LIGHT2, GL_DIFFUSE, white);
-	glLightf(GL_LIGHT2, GL_SPOT_CUTOFF, 25.0);
-	glLightf(GL_LIGHT2, GL_SPOT_EXPONENT, 4.0);
-	glLightfv(GL_LIGHT3, GL_DIFFUSE, white);
-	glLightf(GL_LIGHT3, GL_SPOT_CUTOFF, 20.0);
-	glLightf(GL_LIGHT3, GL_SPOT_EXPONENT, 4.0);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, yellow);
+	glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 10.0);
+	glLightf(GL_LIGHT1, GL_SPOT_EXPONENT, 8.0);
+	glLightfv(GL_LIGHT2, GL_DIFFUSE, yellow);
+	glLightf(GL_LIGHT2, GL_SPOT_CUTOFF, 10.0);
+	glLightf(GL_LIGHT2, GL_SPOT_EXPONENT, 8.0);
+	glLightfv(GL_LIGHT3, GL_DIFFUSE, yellow);
+	glLightf(GL_LIGHT3, GL_SPOT_CUTOFF, 10.0);
+	glLightf(GL_LIGHT3, GL_SPOT_EXPONENT, 8.0);
 }
 
 

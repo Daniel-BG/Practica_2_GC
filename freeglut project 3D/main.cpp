@@ -28,7 +28,7 @@ int WIDTH= 500, HEIGHT= 500;
 GLdouble xRight=10, xLeft=-xRight, yTop=10, yBot=-yTop, N=1, F=1000;
 
 // Camera parameters
-GLdouble eyeX=5.0, eyeY=5.0, eyeZ=5.0;
+GLdouble eyeX=5.0, eyeY=10.0, eyeZ=15.0;
 GLdouble lookX=0.0, lookY=0.0, lookZ=0.0;
 GLdouble upX=0, upY=1, upZ=0;
 
@@ -212,14 +212,24 @@ void display(void) {
 			glMatrixMode(GL_MODELVIEW);
 			glPushMatrix();
 			glMultMatrixf(matrix);
+			glPushMatrix();
 			glTranslatef(0, 0, tankPos);
 			glRotatef(180, 1, 0, 0);
 			//glRotatef(derrape * 5, 0, 1, 0);
 			//cout << derrape * 5 << endl;
 			glRotatef(90, 0, 1, 0);
 
+			glScaled(0.5,0.5,0.5);
 			tanque->dibuja();
+			glPopMatrix();
+			glTranslated(0, 0, 10);
+			GLUquadricObj* q;
+			q = gluNewQuadric();
+			gluSphere(q, 2, 100, 100);
 
+
+
+			gluDeleteQuadric(q);
 			//hacer pop matriz
 			glPopMatrix();
 		}
